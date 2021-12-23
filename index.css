@@ -1,0 +1,11 @@
+*{
+    margin:0px;
+}
+#canvas{
+    display:block;
+    margin:auto;
+    border:4px solid rgb(51, 78, 119)
+}
+body{
+    background-color:rgb(58, 90, 139);
+}
