@@ -16,7 +16,7 @@ const FLOOR_COLOR = "#788"
 
 //Speeds
 let speed = 4
-let angleSpeed = 4
+let angleSpeed = 5
 
 //Render the blocks or map view
 let render = true
@@ -83,6 +83,10 @@ function Player() {
 	//Player coords
 	this.x = tileSize * 1.7
 	this.y = tileSize * 1.7
+
+	//Moves
+	this.down = false
+	this.up = false
 	//Player angle
 	this.angle = 0
 
@@ -94,8 +98,27 @@ function Player() {
 			this.rays.push(new Ray(this.angle + i * angle, this.x, this.y, i))
 		}
 	}
+
 	//Draw
 	this.draw = () => {
+		//Moves
+		if (this.up) {
+			let x = Math.floor((this.x + Math.cos(toRadians(this.angle)) * 2) / tileSize)
+			let y = Math.floor((this.y + Math.sin(toRadians(this.angle)) * 2) / tileSize)
+			if (map[y][x] == 0) {
+				this.y += Math.sin(toRadians(this.angle)) * 2
+				this.x += Math.cos(toRadians(this.angle)) * 2
+			}
+		}
+		else if (this.down) {
+			let x = Math.floor((this.x - Math.cos(toRadians(this.angle)) * 2) / tileSize)
+			let y = Math.floor((this.y - Math.sin(toRadians(this.angle)) * 2) / tileSize)
+			if (map[y][x] == 0) {
+				this.y -= Math.sin(toRadians(this.angle)) * 2
+				this.x -= Math.cos(toRadians(this.angle)) * 2
+			}
+		}
+
 		if (!render) {
 			//Draw pointer
 			ctx.beginPath()
@@ -115,7 +138,7 @@ function Player() {
 			ctx.fill()
 			ctx.closePath()
 		}
-		
+
 		this.angle = normalizeAngle(this.angle)
 		//Making a cone of rays
 		let angle = fov / canvas.width
@@ -345,20 +368,21 @@ document.addEventListener("keydown", e => {
 			player.angle += angleSpeed
 			break
 		case K_UP:
-			x = Math.floor((player.x + Math.cos(toRadians(player.angle)) * speed) / tileSize)
-			y = Math.floor((player.y + Math.sin(toRadians(player.angle)) * speed) / tileSize)
-			if (map[y][x] != 1) {
-				player.x += Math.cos(toRadians(player.angle)) * speed
-				player.y += Math.sin(toRadians(player.angle)) * speed
-			}
+			player.up = true
 			break;
 		case K_DOWN:
-			x = Math.floor((player.x - Math.cos(toRadians(player.angle)) * speed) / tileSize)
-			y = Math.floor((player.y - Math.sin(toRadians(player.angle)) * speed) / tileSize)
-			if (map[y][x] != 1) {
-				player.x -= Math.cos(toRadians(player.angle)) * speed
-				player.y -= Math.sin(toRadians(player.angle)) * speed
-			}
+			player.down = true
+			break;
+	}
+})
+
+document.addEventListener("keyup", e=>{
+	switch(e.keyCode){
+		case K_UP:
+			player.up = false
+			break
+		case K_DOWN:
+			player.down = false
 			break;
 	}
 })
