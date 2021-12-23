@@ -87,6 +87,8 @@ function Player() {
 	//Moves
 	this.down = false
 	this.up = false
+	this.right = false
+	this.left = false
 	//Player angle
 	this.angle = 0
 
@@ -118,7 +120,11 @@ function Player() {
 				this.x -= Math.cos(toRadians(this.angle)) * 2
 			}
 		}
-
+		//Rotations
+		if (this.left)
+			this.angle -= angleSpeed
+		else if (this.right)
+			this.angle += angleSpeed
 		if (!render) {
 			//Draw pointer
 			ctx.beginPath()
@@ -362,10 +368,10 @@ document.addEventListener("keydown", e => {
 	let y = 0
 	switch (e.keyCode) {
 		case K_LEFT:
-			player.angle -= angleSpeed
+			player.left = true
 			break;
 		case K_RIGHT:
-			player.angle += angleSpeed
+			player.right = true
 			break
 		case K_UP:
 			player.up = true
@@ -376,8 +382,14 @@ document.addEventListener("keydown", e => {
 	}
 })
 
-document.addEventListener("keyup", e=>{
-	switch(e.keyCode){
+document.addEventListener("keyup", e => {
+	switch (e.keyCode) {
+		case K_LEFT:
+			player.left = false
+			break;
+		case K_RIGHT:
+			player.right = false
+			break;
 		case K_UP:
 			player.up = false
 			break
