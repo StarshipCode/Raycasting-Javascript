@@ -51,6 +51,9 @@ wallTexture.src = "./textures/wall.png"
 let handTexture = new Image()
 handTexture.src = "textures/hands.png"
 
+let skyTexture = new Image()
+skyTexture.src = "textures/sky.jpg"
+
 function drawMap() {
 	ctx.fillStyle = "#333"
 	for (let x = 0; x < map[0].length; x++) {
@@ -342,8 +345,7 @@ function draw() {
 	//Clear display
 	ctx.clearRect(0, 0, canvas.width, canvas.height)
 	//Draw sky and floor
-	ctx.fillStyle = SKY_COLOR
-	ctx.fillRect(0, 0, canvas.width, canvas.height / 2)
+	ctx.drawImage(skyTexture, 0,0,canvas.width,canvas.height/2)
 	ctx.fillStyle = FLOOR_COLOR
 	ctx.fillRect(0, canvas.height / 2, canvas.width, canvas.height / 2)
 	//Draw map
