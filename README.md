@@ -7,7 +7,3 @@ https://starshipcode.github.io/Raycasting-Javascript/
 - LEFT ARROW (Rotate camera to left)
 - RIGHTARROW (Rotate camera to right)
 
-#### If you want to disable render , write in console the next line:
-```js
-render = false;
-```
