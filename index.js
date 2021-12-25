@@ -54,6 +54,8 @@ handTexture.src = "textures/hands.png"
 let skyTexture = new Image()
 skyTexture.src = "textures/sky.jpg"
 
+let skyX = 0
+
 function drawMap() {
 	ctx.fillStyle = "#333"
 	for (let x = 0; x < map[0].length; x++) {
@@ -124,10 +126,24 @@ function Player() {
 			}
 		}
 		//Rotations
-		if (this.left)
+		if (this.left) {
 			this.angle -= angleSpeed
-		else if (this.right)
+			if(skyX - 1 >= 0){
+				skyX-=  43
+			}
+			else{
+				skyX = 1400
+			}
+		}
+		else if (this.right) {
 			this.angle += angleSpeed
+			if(skyX + 1 <= 1400){
+				skyX+= 43
+			}
+			else{
+				skyX = 0
+			}
+		}
 		if (!render) {
 			//Draw pointer
 			ctx.beginPath()
@@ -345,7 +361,7 @@ function draw() {
 	//Clear display
 	ctx.clearRect(0, 0, canvas.width, canvas.height)
 	//Draw sky and floor
-	ctx.drawImage(skyTexture, 0,0,canvas.width,canvas.height/2)
+	ctx.drawImage(skyTexture, skyX, 0, 700, 350, 0, 0, canvas.width, canvas.height / 2)
 	ctx.fillStyle = FLOOR_COLOR
 	ctx.fillRect(0, canvas.height / 2, canvas.width, canvas.height / 2)
 	//Draw map
