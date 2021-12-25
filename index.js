@@ -58,7 +58,7 @@ function drawMap() {
 	ctx.fillStyle = "#333"
 	for (let x = 0; x < map[0].length; x++) {
 		for (let y = 0; y < map.length; y++) {
-			if (map[y][x] == 1)
+			if (map[y][x] != 0)
 				ctx.fillRect(x * tileSize, y * tileSize, tileSize, tileSize)
 		}
 	}
